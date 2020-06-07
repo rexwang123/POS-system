@@ -1,13 +1,13 @@
 import React, {Component, Fragment} from "react";
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
+import propTypes from 'prop-types';
 import {getCustomers, deleteCustomers} from '../actions/customers'
 
 export class Customers extends Component{
     static propTypes = {
-        customers: PropTypes.array.isRequired,
-        getCustomers: PropTypes.func.isRequired,
-        deleteCustomers: PropTypes.func.isRequired
+        customers: propTypes.array.isRequired,
+        getCustomers: propTypes.func.isRequired,
+        deleteCustomers: propTypes.func.isRequired
     }
 
     componentDidMount(){
@@ -47,7 +47,7 @@ export class Customers extends Component{
 }
 
 const mapStateToProps = state => ({
-    customers: state.customersReducer.customers
+    customers: state.customers.customers
 })
 
 export default connect(mapStateToProps, {getCustomers,deleteCustomers})(Customers)

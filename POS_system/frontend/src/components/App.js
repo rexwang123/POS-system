@@ -7,6 +7,7 @@ import './App.css';
 import { HashRouter as Router, Route, NavLink, Switch, Redirect } from 'react-router-dom';
 import Order from './Order'
 import Customer from './Customer'
+import Goods from './Goods'
 
 import { Provider } from 'react-redux';
 import store from '../store';
@@ -23,6 +24,7 @@ class App extends Component {
                                 <Nav className="mr-auto">
                                     <Nav.Link href="#/customer">Customers</Nav.Link>
                                     <Nav.Link href="#/order">Order</Nav.Link>
+                                    <Nav.Link href="#/goods">Goods</Nav.Link>
 
                                     <NavDropdown title="Reports" id="collasible-nav-dropdown">
                                         <NavDropdown.Item href="#action/3.1">Daily</NavDropdown.Item>
@@ -42,6 +44,7 @@ class App extends Component {
                         <Router>
                             <Route exact path="/order" component={Order} />
                             <Route exact path="/customer" component={Customer} />
+                            <Route exact path="/goods" component={Goods} />
                     </Router>
                 </div>
             </Provider>

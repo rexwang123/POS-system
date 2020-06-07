@@ -8,9 +8,9 @@ class Order(models.Model):
         ("TD", "TO BE DELIVERED")
     )
     status = models.CharField(choices=STATUS, max_length = 2)
-    customer = models.ForeignKey('customer.Customer', on_delete=models.CASCADE)
+    customer = models.ForeignKey('customers.Customer', on_delete=models.CASCADE)
     delivery_Fee = models.DecimalField(decimal_places=2, max_digits=4)
     created_at = models.DateTimeField(auto_now_add=True)
-
+    #goods = models.OneToOneField('Carts.Cart', on_delete=models.CASCADE)
     #orderID = time + phone number + random number , which is unique
     orderID = models.CharField(max_length=100)
