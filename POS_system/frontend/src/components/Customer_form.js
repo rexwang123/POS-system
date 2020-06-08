@@ -60,9 +60,10 @@ function Customer_form(Props){
                     </Form.Group>
                 </Form.Row>
 
-               
+                <Button variant="primary" value={true} name="save" onClick={Props.handleSave}>
+                        Save
+                    </Button>
 
-                
             </Form>
         </div>)
 }

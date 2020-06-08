@@ -14,12 +14,12 @@ export const getCarts = () => dispatch =>{
 }
 
 // DELETE CARTS
-export const deleteCarts = cart => dispatch =>{
-    axios.delete(`/api/carts/${cart}/`)
+export const deleteCarts = id => dispatch =>{
+    axios.delete(`/api/carts/${id}/`)
         .then (res => {
             dispatch({
                 type: DELETE_CARTS,
-                payload: carts
+                payload: id
             });
         }).catch(err => console.log(err));
 }

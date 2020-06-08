@@ -1,4 +1,4 @@
-import { GET_CUSTOMERS, DELETE_CUSTOMERS, ADD_CUSTOMERS } from '../actions/types.js';
+import { GET_CUSTOMERS, DELETE_CUSTOMERS, ADD_CUSTOMERS, PUT_CUSTOMERS} from '../actions/types.js';
 
 const initialState = {
     customers: []
@@ -23,10 +23,10 @@ export default function(state = initialState, action) {
                 customers: [...state.customers,action.payload]
             };
 
-        case PUT_GOODS:
+        case PUT_CUSTOMERS:
             return{
                 ...state,
-                carts: [...state.carts]
+                customers: [...state.customers]
             };
         default:
             return state
