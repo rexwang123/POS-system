@@ -50,16 +50,31 @@ class Order extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        if(this.state.saveOrder === false){
+
+        if(this.state.save === false){
             alert("Please first save the customer information");
             return
         }
-        if (this.state.items.length > 0) {
+        
+        if (this.state.items.length > 0){
+            const { lastName, firstName, email, number, address, city, state, zipcode, status, date, delivery_fee} = this.state;
+            // add customer to sqlite database
+            const customer = { lastName, firstName, email, number };
+            this.props.addCustomers(customer)
+    
+            const orderId = this.state.number + "" + Math.floor(100000 + Math.random() * 900000);
+            const order = {delivery_Fee:delivery_fee, customer:email, date, status, address, city, state, zipcode, orderId:orderId}
+            this.props.addOrders(order)
+            this.setState(state => {
+                return { ...state, saveOrder:true, orderId:orderId};
+            })
+
             this.state.items.map(item => {
                 this.props.addCarts({goods:item.item_name, quantity:item.quantity, cost:item.cost, selling_price:item.selling_price, revenue:item.revenue, order:this.state.orderId})
-            })     
+         });
         }
-    };
+    }
+    
 
     handleChange = event => {
         event.preventDefault();
@@ -67,10 +82,9 @@ class Order extends Component {
     }
 
     handleSaveOrder = () => {
-        if(this.save === false){
+        if(this.state.save === false){
             return;
         }
-
         if (this.state.items.length > 0){
             const { lastName, firstName, email, number, address, city, state, zipcode, status, date, delivery_fee} = this.state;
             // add customer to sqlite database
@@ -84,7 +98,6 @@ class Order extends Component {
                 return { ...state, saveOrder:true, orderId:orderId};
             })
         }
-        
     }
 
     handleSaveCus = () => {

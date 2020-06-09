@@ -1,7 +1,8 @@
-import { GET_ORDERS, DELETE_ORDERS, ADD_ORDERS, PUT_ORDERS} from '../actions/types.js';
+import { GET_ORDERS, DELETE_ORDERS, ADD_ORDERS, PUT_ORDERS, GET_ONE_ORDER} from '../actions/types.js';
 
 const initialState = {
-    orders: []
+    orders: [],
+    order: ""
 }
 
 export default function(state = initialState, action) {
@@ -28,7 +29,12 @@ export default function(state = initialState, action) {
                 ...state,
                 orders: [...state.orders]
             };
-        
+            
+        case GET_ONE_ORDER:
+            return{
+                ...state,
+                order: action.payload
+            };
         default:
             return state
     }

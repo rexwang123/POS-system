@@ -17,3 +17,4 @@ export const GET_ORDERS = "GET_ORDERS";
 export const DELETE_ORDERS = "DELETE_ORDERS";
 export const ADD_ORDERS = "ADD_ORDERS";
 export const PUT_ORDERS = "PUT_ORDERS";
+export const GET_ONE_ORDER = "GET_ONE_ORDER";

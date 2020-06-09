@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {GET_ORDERS, DELETE_ORDERS, ADD_ORDERS, PUT_ORDERS} from './types';
+import {GET_ORDERS, DELETE_ORDERS, ADD_ORDERS, PUT_ORDERS, GET_ONE_ORDER} from './types';
 
 // GET ORDERS
 export const getOrders = () => dispatch =>{
@@ -41,6 +41,17 @@ export const putOrders = order => dispatch =>{
         .then (res => {
             dispatch({
                 type: PUT_ORDERS,
+                payload: res.data
+            });
+        }).catch(err => console.log(err));
+}
+
+// GET ONE ORDERS
+export const getOneOrder= orderId => dispatch =>{
+    axios.get(`/api/orders/${orderId}`)
+        .then (res => {
+            dispatch({
+                type: GET_ONE_ORDER,
                 payload: res.data
             });
         }).catch(err => console.log(err));
