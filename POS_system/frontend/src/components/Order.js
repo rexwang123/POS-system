@@ -13,8 +13,8 @@ import { addCarts } from '../actions/carts'
 
 class Order extends Component {
     state = {
-        save:false,
-        saveOrder:false,
+        save: false,
+        saveOrder: false,
         lastName: "",
         firstName: "",
         email: "",
@@ -25,15 +25,15 @@ class Order extends Component {
         zipcode: "",
         items: [],
 
-        date:"",
+        date: "",
         item_name: "",
         quantity: "",
         item_cost: "",
         item_price: "",
         delivery_fee: 0,
         status: "Paid",
-        orderId:"",
-        total_quantity:0,
+        orderId: "",
+        total_quantity: 0,
         total_cost: 0,
         total_price: 0,
         total_revenue: 0,
@@ -48,68 +48,59 @@ class Order extends Component {
         this.props.getGoods();
     }
 
-    handleSubmit = event => {
-        event.preventDefault();
-
-        if(this.state.save === false){
-            alert("Please first save the customer information");
-            return
-        }
-        
-        if (this.state.items.length > 0){
-            const { lastName, firstName, email, number, address, city, state, zipcode, status, date, delivery_fee} = this.state;
-            // add customer to sqlite database
-            const customer = { lastName, firstName, email, number };
-            this.props.addCustomers(customer)
-    
-            const orderId = this.state.number + "" + Math.floor(100000 + Math.random() * 900000);
-            const order = {delivery_Fee:delivery_fee, customer:email, date, status, address, city, state, zipcode, orderId:orderId}
-            this.props.addOrders(order)
-            this.setState(state => {
-                return { ...state, saveOrder:true, orderId:orderId};
-            })
-
-            this.state.items.map(item => {
-                this.props.addCarts({goods:item.item_name, quantity:item.quantity, cost:item.cost, selling_price:item.selling_price, revenue:item.revenue, order:this.state.orderId})
-         });
-        }
-    }
-    
 
     handleChange = event => {
         event.preventDefault();
         this.setState({ [event.target.name]: event.target.value });
     }
 
-    handleSaveOrder = () => {
-        if(this.state.save === false){
+    handleSubmit = () => {
+        if (this.state.save === false) {
             return;
         }
-        if (this.state.items.length > 0){
-            const { lastName, firstName, email, number, address, city, state, zipcode, status, date, delivery_fee} = this.state;
+        if (this.state.items.length > 0) {
+            const { lastName, firstName, email, number, address, city, state, zipcode, status, date, delivery_fee } = this.state;
             // add customer to sqlite database
             const customer = { lastName, firstName, email, number };
-            this.props.addCustomers(customer)
-    
+            // this.props.addCustomers(customer)
+
             const orderId = this.state.number + "" + Math.floor(100000 + Math.random() * 900000);
-            const order = {delivery_Fee:delivery_fee, customer:email, date, status, address, city, state, zipcode, orderId:orderId}
-            this.props.addOrders(order)
+            const order = { delivery_Fee: delivery_fee, customer: email, date, status, address, city, state, zipcode, orderId: orderId }
+            // this.props.addOrders(order)
+
+            axios.post('/api/customers/', customer)
+                .then(res => {
+                    axios.post('api/orders/', order)
+                        .then(res => this.state.items.map(item => {
+                            console.log(this.state.date)
+                            this.props.addCarts({ goods: item.item_name, quantity: item.quantity, cost: item.cost, selling_price: item.selling_price, revenue: item.revenue, order: orderId, date: this.state.date })
+                        }))
+                })
+                .catch(res => {
+                    axios.post('api/orders/', order)
+                        .then(res => this.state.items.map(item => {
+                            console.log(this.state.date)
+                            this.props.addCarts({ goods: item.item_name, quantity: item.quantity, cost: item.cost, selling_price: item.selling_price, revenue: item.revenue, order: orderId, date: this.state.date })
+                        }))
+                })
+
+            console.log("xiba")
             this.setState(state => {
-                return { ...state, saveOrder:true, orderId:orderId};
+                return { ...state, saveOrder: true, orderId: orderId };
             })
         }
     }
 
     handleSaveCus = () => {
         this.setState(state => {
-            return { ...state, save:true};
+            return { ...state, save: true };
         })
     }
 
 
     handleSelect = event => {
         const value = event.target.value;
-        if(value === "Select item"){
+        if (value === "Select item") {
             return;
         }
         const goods = this.props.goods.find(item => item.goods == value);
@@ -136,14 +127,14 @@ class Order extends Component {
             const p = parseFloat(one.selling_price) + parseFloat(price)
             newItems = rest.concat({ item_name: state.item_name, quantity: q, cost: c, selling_price: p, revenue: p - c })
         }
-  
+
         return {
             ...state,
             items: newItems,
-            total_quantity: parseFloat(state.total_quantity)+ parseFloat(state.quantity),
-            total_cost: parseFloat(state.total_cost)+ parseFloat(cost),
-            total_price: parseFloat(state.total_price)+ parseFloat(price),
-            total_revenue: parseFloat(state.total_revenue)+ parseFloat(price-cost)
+            total_quantity: parseFloat(state.total_quantity) + parseFloat(state.quantity),
+            total_cost: parseFloat(state.total_cost) + parseFloat(cost),
+            total_price: parseFloat(state.total_price) + parseFloat(price),
+            total_revenue: parseFloat(state.total_revenue) + parseFloat(price - cost)
         }
     });
 
@@ -154,10 +145,10 @@ class Order extends Component {
             return {
                 ...state,
                 items: state.items.filter(item => item.item_name != name),
-                total_quantity: parseFloat(state.total_quantity)- parseFloat(i.quantity),
+                total_quantity: parseFloat(state.total_quantity) - parseFloat(i.quantity),
                 total_cost: parseFloat(state.total_cost) - parseFloat(i.cost),
-                total_price: parseFloat(state.total_price)- parseFloat(i.selling_price),
-                total_revenue: parseFloat(state.total_revenue)- parseFloat(i.revenue)
+                total_price: parseFloat(state.total_price) - parseFloat(i.selling_price),
+                total_revenue: parseFloat(state.total_revenue) - parseFloat(i.revenue)
             }
         })
     };
@@ -168,7 +159,7 @@ class Order extends Component {
         return (
             <div className="container">
                 <div className="card">
-                    <Customer_form handler={this.handleChange} handleSave={this.handleSaveCus}/>
+                    <Customer_form handler={this.handleChange} handleSave={this.handleSaveCus} />
                 </div>
 
                 <div>
@@ -197,7 +188,7 @@ class Order extends Component {
                                         </td>
                                     </tr>)
                             })}
-                           
+
                             <tr >
                                 <td>Total:</td>
                                 <td>{this.state.total_quantity}</td>
@@ -218,7 +209,7 @@ class Order extends Component {
 
                         </InputGroup>
                         <InputGroup className="mb-2 mr-sm-2">
-                            <FormControl name="quantity" onChange={this.handleChange} id="inlineFormInputGroupUsername2" placeholder="Quantity in lb" required />
+                            <FormControl type="number" name="quantity" onChange={this.handleChange} id="inlineFormInputGroupUsername2" placeholder="Quantity in lb" required />
                             <InputGroup.Append>
                                 <InputGroup.Text>lb</InputGroup.Text>
                             </InputGroup.Append>
@@ -238,10 +229,10 @@ class Order extends Component {
                             <Form.Label>Delivery fee:</Form.Label>
                             <Form.Control name="delivery_fee" onChange={this.handleChange} type="number" placeholder="0.00" />
                         </Form.Group>
-                        
+
 
                         <Form.Group className="mb-2 mr-sm-2">
-                        <Form.Label>Status:</Form.Label>
+                            <Form.Label>Status:</Form.Label>
                             <Form.Control name="status" onChange={this.handleChange} as="select" required>
                                 <option value="Paid">Paid</option>
                                 <option value="Not Paid">Not Paid</option>
@@ -250,29 +241,26 @@ class Order extends Component {
                         </Form.Group>
 
                         <Form.Group className="mb-2 mr-sm-2">
-                        <Form.Label>Date:</Form.Label>
-                            <Form.Control name="date" onChange={this.handleChange} type="date" required/>
+                            <Form.Label>Date:</Form.Label>
+                            <Form.Control name="date" onChange={this.handleChange} type="date" required />
                         </Form.Group>
 
                         <Form.Group id="total_revenue">
                             <Form.Label>
-                                <h2>Total revenue: {this.state.total_revenue-this.state.delivery_fee}</h2>
+                                <h2>Total revenue: {this.state.total_revenue - this.state.delivery_fee}</h2>
                             </Form.Label>
                             {/* <Col sm="10">
                                 <Form.Control plaintext readOnly value={this.state.total_revenue-this.state.delivery_fee} />
                             </Col> */}
                         </Form.Group>
                     </Form>
-
-                    <Button variant="primary" value={true} name="saveOrder" onClick={this.handleSaveOrder}>
-                        Save
-                    </Button>
                 </div>
                 <hr />
                 <div className="card">
                     <Button variant="primary" type="submit" onClick={this.handleSubmit}>
                         Submit
                     </Button>
+
                 </div>
             </div>)
     }
@@ -282,4 +270,4 @@ const mapStateToProps = state => ({
     goods: state.goods.goods
 })
 
-export default connect(mapStateToProps, { addCustomers, addGoods, getGoods, addOrders, addCarts})(Order);
+export default connect(mapStateToProps, { addCustomers, addGoods, getGoods, addOrders, addCarts })(Order);

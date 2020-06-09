@@ -2,6 +2,7 @@ from orders.models import Order
 from rest_framework import viewsets, permissions
 from .serializers import OrderSerializer
 
+
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
     permission_classes = [
@@ -9,3 +10,5 @@ class OrderViewSet(viewsets.ModelViewSet):
     ]
 
     serializer_class = OrderSerializer
+
+   

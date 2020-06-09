@@ -7,3 +7,6 @@ class Customer(models.Model):
     email = models.EmailField(max_length=500,unique=True,primary_key=True)
     number = models.PositiveIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return '%s,%s,%s,%s'%(self.lastName,self.firstName,self.email,self.number)
