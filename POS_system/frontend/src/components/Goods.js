@@ -58,8 +58,6 @@ export class Goods extends Component {
                                 return (
                                     <tr key={goods.goods}>
                                         <td>{goods.goods}</td>
-                                        {/* <td>{goods.cost}</td>
-                                    <td>{goods.selling_price}</td> */}
                                         <td>
                                             <InputGroup >
                                                 <FormControl disabled={true} type="number" name="cost_" id={goods.goods}

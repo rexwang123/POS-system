@@ -1,7 +1,8 @@
-import { GET_CARTS, DELETE_CARTS, ADD_CARTS, PUT_CARTS} from '../actions/types.js';
+import { GET_CARTS, DELETE_CARTS, ADD_CARTS, PUT_CARTS, GET_CARTS_BY_DATES} from '../actions/types.js';
 
 const initialState = {
-    carts: []
+    carts: [],
+    carts_by_dates: []
 }
 
 export default function(state = initialState, action) {
@@ -27,6 +28,12 @@ export default function(state = initialState, action) {
             return{
                 ...state,
                 carts: [...state.carts]
+            };
+        
+        case GET_CARTS_BY_DATES:
+            return{
+                ...state,
+                carts_by_dates: action.payload
             };
         default:
             return state

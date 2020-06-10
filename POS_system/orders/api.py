@@ -1,7 +1,8 @@
 from orders.models import Order
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions 
 from .serializers import OrderSerializer, OrderGetSerializer
-
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
@@ -14,4 +15,10 @@ class OrderViewSet(viewsets.ModelViewSet):
             return OrderGetSerializer 
         return OrderSerializer 
     
-   
+    @action(detail=False)
+    def by_dates(self, request):
+        start_date = request.GET.get('start_date')
+        end_date = request.GET.get('end_date')
+        orders_ = Order.objects.filter(date__gte=start_date,date__lte=end_date)
+        serializer = self.get_serializer(orders_,many=True)
+        return Response(serializer.data)

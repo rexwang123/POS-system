@@ -12,8 +12,6 @@ class Cart(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     
     class Meta:
-        ordering = ('created',)
+        ordering = ('date',)
 
-    def __unicode__(self):
-        return '%s,%d,%d,%d,%d'%(self.goods,self.quantity,self.cost,self.selling_price,self.revenue)
 

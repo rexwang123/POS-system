@@ -9,7 +9,7 @@ import Order from './Order'
 import Customer from './Customer'
 import Goods from './Goods'
 import Transactions from './Transactions'
-
+import Daily from './Daily'
 import { Provider } from 'react-redux';
 import store from '../store';
 
@@ -29,9 +29,9 @@ class App extends Component {
                                     <Nav.Link href="#/transactions">Order Summary</Nav.Link>
 
                                     <NavDropdown title="Reports" id="collasible-nav-dropdown">
-                                        <NavDropdown.Item href="#action/3.1">Daily</NavDropdown.Item>
-                                        <NavDropdown.Item href="#action/3.2">Weekly</NavDropdown.Item>
-                                        <NavDropdown.Item href="#action/3.3">Monthly</NavDropdown.Item>
+                                        <NavDropdown.Item href="#/report/daily">Daily</NavDropdown.Item>
+                                        <NavDropdown.Item href="#/report/weekly">Weekly</NavDropdown.Item>
+                                        <NavDropdown.Item href="#/report/monthly">Monthly</NavDropdown.Item>
                              
                                     </NavDropdown>
                                 </Nav>
@@ -48,6 +48,7 @@ class App extends Component {
                             <Route exact path="/customer" component={Customer} />
                             <Route exact path="/goods" component={Goods} />
                             <Route exact path="/transactions" component={Transactions} />
+                            <Route exact path="/report/daily" component={Daily} />
                     </Router>
                 </div>
             </Provider>

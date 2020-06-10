@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {GET_CARTS, DELETE_CARTS, ADD_CARTS, PUT_CARTS} from './types';
+import {GET_CARTS, DELETE_CARTS, ADD_CARTS, PUT_CARTS, GET_CARTS_BY_DATES} from './types';
 
 // GET CARTS
 export const getCarts = () => dispatch =>{
@@ -41,6 +41,17 @@ export const putCarts = cart => dispatch =>{
         .then (res => {
             dispatch({
                 type: PUT_CARTS,
+                payload: res.data
+            });
+        }).catch(err => console.log(err));
+}
+
+// GET CARTS BY DATES
+export const getCartsByDates = dates => dispatch =>{
+    axios.get('/api/carts/by_dates',{params:dates})
+        .then (res => {
+            dispatch({
+                type: GET_CARTS_BY_DATES,
                 payload: res.data
             });
         }).catch(err => console.log(err));
