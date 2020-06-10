@@ -1,6 +1,6 @@
 from orders.models import Order
 from rest_framework import viewsets, permissions
-from .serializers import OrderSerializer
+from .serializers import OrderSerializer, OrderGetSerializer
 
 
 class OrderViewSet(viewsets.ModelViewSet):
@@ -9,6 +9,9 @@ class OrderViewSet(viewsets.ModelViewSet):
         permissions.AllowAny
     ]
 
-    serializer_class = OrderSerializer
-
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return OrderGetSerializer 
+        return OrderSerializer 
+    
    

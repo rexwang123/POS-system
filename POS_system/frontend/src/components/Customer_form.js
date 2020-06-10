@@ -55,7 +55,7 @@ function Customer_form(Props){
                     </Form.Group>
 
                     <Form.Group as={Col} controlId="formGridZip">
-                        <Form.Label>Zip</Form.Label>
+                        <Form.Label>Zip Code</Form.Label>
                         <Form.Control type="number" name="zipcode" onChange={Props.handler} required/>
                     </Form.Group>
                 </Form.Row>

@@ -39,12 +39,9 @@ export class Goods extends Component {
 
     handleChange = (e) => { this.setState({ [e.target.name]: e.target.value }) };
 
-
-
-    //handleEdit = e => this.setState({edit:{[e.target.name]:e.target.value}});
     render() {
         return (
-            <div>
+            <div className="container">
                 <Fragment>
                     <h2> Goods</h2>
                     <table className="table table-striped">

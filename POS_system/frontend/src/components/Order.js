@@ -59,32 +59,39 @@ class Order extends Component {
             return;
         }
         if (this.state.items.length > 0) {
-            const { lastName, firstName, email, number, address, city, state, zipcode, status, date, delivery_fee } = this.state;
+            const { lastName, firstName, email, number, address, city, state, zipcode, status, date, delivery_fee, total_quantity,
+                total_cost,
+                total_price,
+                total_revenue} = this.state;
             // add customer to sqlite database
             const customer = { lastName, firstName, email, number };
             // this.props.addCustomers(customer)
 
             const orderId = this.state.number + "" + Math.floor(100000 + Math.random() * 900000);
-            const order = { delivery_Fee: delivery_fee, customer: email, date, status, address, city, state, zipcode, orderId: orderId }
-            // this.props.addOrders(order)
-
+            const order = {
+                delivery_fee, customer: parseInt(number), date, status, address, city, state, zipcode, orderId: orderId, 
+                total_quantity,
+                total_cost,
+                total_price,
+                total_revenue
+            };
+        
             axios.post('/api/customers/', customer)
                 .then(res => {
+                    console.log(order.customer)
                     axios.post('api/orders/', order)
                         .then(res => this.state.items.map(item => {
-                            console.log(this.state.date)
                             this.props.addCarts({ goods: item.item_name, quantity: item.quantity, cost: item.cost, selling_price: item.selling_price, revenue: item.revenue, order: orderId, date: this.state.date })
                         }))
                 })
                 .catch(res => {
+                    console.log(order.customer)
                     axios.post('api/orders/', order)
                         .then(res => this.state.items.map(item => {
-                            console.log(this.state.date)
                             this.props.addCarts({ goods: item.item_name, quantity: item.quantity, cost: item.cost, selling_price: item.selling_price, revenue: item.revenue, order: orderId, date: this.state.date })
                         }))
                 })
 
-            console.log("xiba")
             this.setState(state => {
                 return { ...state, saveOrder: true, orderId: orderId };
             })
@@ -249,9 +256,7 @@ class Order extends Component {
                             <Form.Label>
                                 <h2>Total revenue: {this.state.total_revenue - this.state.delivery_fee}</h2>
                             </Form.Label>
-                            {/* <Col sm="10">
-                                <Form.Control plaintext readOnly value={this.state.total_revenue-this.state.delivery_fee} />
-                            </Col> */}
+
                         </Form.Group>
                     </Form>
                 </div>

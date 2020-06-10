@@ -2,7 +2,7 @@ import { GET_ORDERS, DELETE_ORDERS, ADD_ORDERS, PUT_ORDERS, GET_ONE_ORDER} from 
 
 const initialState = {
     orders: [],
-    order: ""
+    order: "initial"
 }
 
 export default function(state = initialState, action) {
@@ -31,6 +31,7 @@ export default function(state = initialState, action) {
             };
             
         case GET_ONE_ORDER:
+            console.log(action.payload)
             return{
                 ...state,
                 order: action.payload

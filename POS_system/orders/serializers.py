@@ -1,15 +1,18 @@
 from rest_framework import serializers
 from orders.models import Order
+from customers.serializers import CustomerSerializer
+from carts.serializers import CartSerializer
 
-class CartsField(serializers.RelatedField):
-    def to_representation(self, value):
-        
-        return '%s,%d,%d,%d,%d'%(value.goods,value.quantity,value.cost,value.selling_price,value.revenue)
-        
-class OrderSerializer(serializers.ModelSerializer):
-    carts = CartsField(many=True,read_only=True)
-    #customer = serializers.ReadOnlyField(source="customer.email")
+   
+class OrderGetSerializer(serializers.ModelSerializer):
+    carts = CartSerializer(many=True,read_only=True)
+    customer = CustomerSerializer(read_only=True)
     class Meta:
         model = Order
-        fields = ('status','customer','delivery_Fee','date','address','city','state','zipcode','orderId','carts')
+        fields = ('status','customer','delivery_fee','total_quantity','total_cost','total_price','total_revenue','date','address','city','state','zipcode','orderId','carts')
 
+
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = '__all__'
