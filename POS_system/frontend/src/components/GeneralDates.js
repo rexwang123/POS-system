@@ -34,37 +34,32 @@ export class GeneralDates extends Component {
 
     handleClick() {
         this.setState(state => ({ ...state, condition: false }))
+        var goodsMap = new Map()
+        var customersMap = new Map()
         Axios.get('/api/orders/by_dates', { params: { start_date: this.state.start_date, end_date: this.state.end_date } })
             .then(res => {
-
-                var goodsMap = new Map()
-                var customersMap = new Map()
-
-
                 const total_cost = res.data.reduce((a,c)=>a+parseFloat(c.total_cost),0)
                 const total_price = res.data.reduce((a,c)=>a+parseFloat(c.total_price),0)
 
-                
                 this.props.goods.map(goods => {
                     goodsMap.set(goods.goods, 0)
                 })
 
                 res.data.map(order => {
-                    if (customersMap.has(order.customer.number)) {
-                        customersMap.set(order.customer.number, customersMap.get(order.customer.number) + parseFloat(order.total_price))
+                    const key = order.customer.number+","+order.customer.firstName + " "+order.customer.lastName;
+                    if (customersMap.has(key)) {
+                        customersMap.set(key, customersMap.get(key) + parseFloat(order.total_price))
                     }
                     else {
-                        customersMap.set(order.customer.number, order.total_price)
+                        customersMap.set(key, parseFloat(order.total_price))
                     }
-                    // cost_list.push(order.total_cost)
-                    // price_list.push(order.total_price)
 
                     order.carts.map(cart => {
                         goodsMap.set(cart.goods, goodsMap.get(cart.goods) + parseFloat(cart.quantity))
                     })
                 }
                 )
-
+                // console.log(customersMap)
                 this.setState(state => ({ ...state, customersMap: customersMap, goodsMap: goodsMap, condition: true, total_price: total_price, total_cost: total_cost }))
             })
 

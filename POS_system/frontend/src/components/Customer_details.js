@@ -46,7 +46,7 @@ function Customer_details(Props) {
                                 <Form.Label>Delivery fee: {order.delivery_fee}</Form.Label>
                             </Form.Group>
                             <Form.Group>
-                                <Form.Label>Net Profit: {order.total_revenue}</Form.Label>
+                                <Form.Label>Sales: {order.total_price}</Form.Label>
                             </Form.Group>
                         </Form>
                         <hr />

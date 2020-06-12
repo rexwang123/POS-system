@@ -4,6 +4,7 @@ import { Nav, NavDropdown } from 'react-bootstrap'
 import Navbar from 'react-bootstrap/Navbar'
 import './App.css';
 import { Button, Form, Col, Row, InputGroup, FormControl } from 'react-bootstrap';
+import Axios from 'axios';
 
 function Report(Props) {
     const [topGoods, setTopGoods] = useState([])
@@ -22,10 +23,10 @@ function Report(Props) {
     function calculateTopCustomers(e) {
         var customersArray = []
         Props.customersMap.forEach((value, key) => {
-            customersArray.push({ number: key, sales: value })
+            customersArray.push({ number: key.split(",")[0], name: key.split(",")[1], sales:value })
 
         })
-        customersArray.sort((a, b) => b.quantity - a.quantity)
+        customersArray.sort((a, b) => b.sales - a.sales)
         customersArray = customersArray.slice(0, e.target.value)
         setTopCustomers(customersArray)
     }
@@ -109,7 +110,8 @@ function Report(Props) {
                 <table className="table table-striped">
                     <thead>
                         <tr>
-                            <th>Customer's Number</th>
+                            <th>Customer</th>
+                            <th>Number</th>
                             <th>Sales</th>
                         </tr>
                     </thead>
@@ -117,6 +119,7 @@ function Report(Props) {
                         {topCustomers.map((customer, index) => {
                             return (
                                 <tr key={index}>
+                                    <td>{customer.name}</td>
                                     <td>{customer.number}</td>
                                     <td>{parseFloat(customer.sales).toFixed(2)}</td>
                                 </tr>
