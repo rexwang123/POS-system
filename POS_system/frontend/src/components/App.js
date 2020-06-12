@@ -8,7 +8,7 @@ import { HashRouter as Router, Route, NavLink, Switch, Redirect } from 'react-ro
 import Order from './Order'
 import Customer from './Customer'
 import Goods from './Goods'
-import Transactions from './Transactions'
+import Transactions from './Order_summary'
 import AllDates from './AllDates'
 import GeneralDates from './GeneralDates'
 import { Provider } from 'react-redux'
@@ -26,9 +26,8 @@ class App extends Component {
                             <Navbar.Collapse id="responsive-navbar-nav">
                                 <Nav className="mr-auto">
                                     <Nav.Link href="#/customer">Customers</Nav.Link>
-                                    
-                                    <Nav.Link href="#/goods">Goods</Nav.Link>
                                     <Nav.Link href="#/transactions">Order Summary</Nav.Link>
+                                    <Nav.Link href="#/goods">Goods</Nav.Link>
                                     <Nav.Link href="#/statements">Statements</Nav.Link>
                                     {/* <Nav.Link href="#/report/selected_dates">Report</Nav.Link> */}
 

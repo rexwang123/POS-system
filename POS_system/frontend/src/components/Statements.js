@@ -21,8 +21,6 @@ export class Statements extends Component {
 
     }
 
-
-
     componentDidMount() {
         this.props.getSections();
         this.props.getEntries();
@@ -39,12 +37,12 @@ export class Statements extends Component {
 
     handleAddEntry = id => {
         const { entry } = this.state;
-        const toAdd = { entry:entry, section: id};
+        const toAdd = { entry: entry, section: id };
         this.props.addEntries(toAdd);
         this.props.getSections();
         document.getElementById("section").value = "";
         document.getElementById("section").value = "";
-       
+
     }
 
     handleChange = (e) => { this.setState({ [e.target.name]: e.target.value }) };
@@ -55,62 +53,64 @@ export class Statements extends Component {
                 <Fragment>
 
                     {this.props.sections.map((section, index) => {
-                        const entries = this.props.entries.filter(x=>x.section == section.id);
+                        const entries = this.props.entries.filter(x => x.section == section.id);
                         return (
                             <div className="block">
-                                <h4>{section.section}</h4>
+
+                                <h2>{section.section}</h2>
+
                                 {entries.map((entry, index2) => {
                                     return (
                                         <div>
-                                        <InputGroup >
-                                            <FormControl disabled={true} type="text" id={index + "," + index2}
-                                                defaultValue={entry.entry} placeholder={entry.entry} />
+                                            <InputGroup >
+                                                <FormControl disabled={true} type="text" id={index + "," + index2}
+                                                    defaultValue={entry.entry} placeholder={entry.entry} />
 
-                                            <InputGroup.Append>
-                                                <ButtonGroup>
-                                                    <button type="submit" className="btn btn-primary btn-sm" onClick={() => { document.getElementById(index + "," + index2).disabled = false }} > Edit </button>{" "}
+                                                <InputGroup.Append>
+                                                    <ButtonGroup>
+                                                        <button type="submit" className="btn btn-primary btn-sm" onClick={() => { document.getElementById(index + "," + index2).disabled = false }} > Edit </button>{" "}
 
-                                                    <button type="submit" className="btn btn-success btn-sm"
-                                                        onClick={() => {
-                                                            console.log(document.getElementById(index + "," + index2).value);
-                                                            document.getElementById(index + "," + index2).disabled = true;
-                                                            this.props.putEntries({ id: entry.id, section: section.id, entry: document.getElementById(index + "," + index2).value })
-                                                        }}>
-                                                        Save </button>{" "}
+                                                        <button type="submit" className="btn btn-success btn-sm"
+                                                            onClick={() => {
+                                                                console.log(document.getElementById(index + "," + index2).value);
+                                                                document.getElementById(index + "," + index2).disabled = true;
+                                                                this.props.putEntries({ id: entry.id, section: section.id, entry: document.getElementById(index + "," + index2).value })
+                                                            }}>
+                                                            Save </button>{" "}
 
-                                                    <button type="submit" className="btn btn-danger btn-sm" onClick={() => {
-                                                        this.props.deleteEntries(entry.id);
-                                                        this.props.getSections()
-                                                        
-                                                    }}>
-                                                        Delete </button>
-                                                </ButtonGroup>
-                                            </InputGroup.Append>
-                                        </InputGroup>
+                                                        <button type="submit" className="btn btn-danger btn-sm" onClick={() => {
+                                                            this.props.deleteEntries(entry.id)}}>
+                                                            Delete </button>
+                                                    </ButtonGroup>
+                                                </InputGroup.Append>
+                                            </InputGroup>
                                         </div>
                                     )
                                 })}
                                 <Form inline>
-                        <Form.Control
-                            className="mb-2 mr-sm-2"
-                            id="entry"
-                            name="entry"
-                            placeholder="entry description"
-                            onChange={this.handleChange}
-                            required />
+                                    <Form.Control
+                                        className="mb-2 mr-sm-2"
+                                        id="entry"
+                                        name="entry"
+                                        placeholder="entry description"
+                                        onChange={this.handleChange}
+                                        required />
 
-                        <ButtonGroup>
-                            <Button className="mb-2" onClick={this.handleAddEntry.bind(this,section.id)}>
-                                Add New Entry
-                        </Button>{' '}
-                        </ButtonGroup>
-                    </Form>
+                                    <ButtonGroup>
+                                        <Button className="mb-2" onClick={this.handleAddEntry.bind(this, section.id)}>
+                                            Add New Entry
+                                    </Button>{' '}
+                                    </ButtonGroup>
+                                </Form>
+                                <div className="App">
+                                <Button variant ="danger"  onClick={() => {this.props.deleteSections(section.id)}}>Delete</Button>
+                                </div>
                                 <hr />
                             </div>
                         )
 
                     })}
-              
+
                     <Form inline>
                         <Form.Control
                             className="mb-2 mr-sm-2"
@@ -138,4 +138,4 @@ const mapStateToProps = state => ({
     entries: state.entries.entries
 })
 
-export default connect(mapStateToProps, { putEntries, deleteEntries, getEntries, deleteSections, getSections, addSections, addEntries })(Statements)
+export default connect(mapStateToProps, { putEntries, putSections, deleteEntries, getEntries, deleteSections, getSections, addSections, addEntries })(Statements)

@@ -2,6 +2,7 @@ export const GET_CUSTOMERS = "GET_CUSTOMERS";
 export const DELETE_CUSTOMERS = "DELETE_CUSTOMERS";
 export const ADD_CUSTOMERS = "ADD_CUSTOMERS";
 export const PUT_CUSTOMERS = "PUT_CUSTOMERS";
+export const GET_ONE_CUSTOMER = "GET_ONE_CUSTOMER"
 
 export const GET_GOODS = "GET_GOODS";
 export const DELETE_GOODS = "DELETE_GOODS";

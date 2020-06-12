@@ -13,8 +13,6 @@ import { addCarts } from '../actions/carts'
 
 class Order extends Component {
     state = {
-        save: false,
-        saveOrder: false,
         lastName: "",
         firstName: "",
         email: "",
@@ -55,8 +53,11 @@ class Order extends Component {
     }
 
     handleSubmit = () => {
-        if (this.state.save === false) {
-            return;
+        if (this.state.firstName === "" || this.state.lastName === "" || this.state.email === ""
+            || this.state.number === "" || this.state.address === "" || this.state.city === ""
+            || this.state.state === "" || this.state.zipcode === "" || this.state.date === "") {
+            alert("You missed one or more fields")
+            return
         }
         if (this.state.items.length > 0) {
             const { lastName, firstName, email, number, address, city, state, zipcode, status, date, delivery_fee, total_quantity,
@@ -85,23 +86,52 @@ class Order extends Component {
                         }))
                 })
                 .catch(res => {
-                    console.log(order.customer)
-                    axios.post('api/orders/', order)
-                        .then(res => this.state.items.map(item => {
-                            this.props.addCarts({ goods: item.item_name, quantity: item.quantity, cost: item.cost, selling_price: item.selling_price, revenue: item.revenue, order: orderId, date: this.state.date })
-                        }))
+                    axios.put(`/api/customers/${customer.number}/`, customer)
+                        .then(res => {
+                            console.log(order.customer)
+                            axios.post('api/orders/', order)
+                                .then(res => this.state.items.map(item => {
+                                    this.props.addCarts({ goods: item.item_name, quantity: item.quantity, cost: item.cost, selling_price: item.selling_price, revenue: item.revenue, order: orderId, date: this.state.date })
+                                }))
+                        })
+
                 })
+                // this.setState({
+                //     lastName: "",
+                //     firstName: "",
+                //     email: "",
+                //     number: "",
+                //     address: "",
+                //     city: "",
+                //     state: "",
+                //     zipcode: "",
+                //     items: [],
+    
+                //     date: "",
+                //     item_name: "",
+                //     quantity: "",
+                //     item_cost: "",
+                //     item_price: "",
+                //     delivery_fee: 0,
+                //     status: "Paid",
+                //     orderId: "",
+                //     total_quantity: 0,
+                //     total_cost: 0,
+                //     total_price: 0,
+                //     total_revenue: 0,
+                // })
+    
+                // document.getElementById("lastName").value = ""
+                // document.getElementById("firstName").value = ""
+                // document.getElementById("number").value = ""
+                // document.getElementById("email").value = ""
+                // document.getElementById("address").value = ""
+                // document.getElementById("city").value = ""
+                // document.getElementById("state").value = ""
+                // document.getElementById("zipcode").value = ""
 
-            this.setState(state => {
-                return { ...state, saveOrder: true, orderId: orderId };
-            })
+            
         }
-    }
-
-    handleSaveCus = () => {
-        this.setState(state => {
-            return { ...state, save: true };
-        })
     }
 
 
@@ -145,6 +175,7 @@ class Order extends Component {
         }
     });
 
+
     handleDelete = event => {
         const name = event.target.name;
         const i = this.state.items.find(item => item.item_name == name)
@@ -167,7 +198,60 @@ class Order extends Component {
             <div className="container">
                 <div className="block" >
                     <div className="card">
-                        <Customer_form handler={this.handleChange} handleSave={this.handleSaveCus} />
+                        <Form className="App">
+                            <h1> Customer Information</h1>
+                            <Form.Row>
+                                <Form.Group as={Col}>
+                                    <Form.Label>First Name</Form.Label>
+                                    <Form.Control id="firstName" type="text" name="firstName" placeholder="First name" onChange={this.handleChange} required />
+                                </Form.Group>
+                                <Form.Group as={Col}>
+                                    <Form.Label>Last Name</Form.Label>
+                                    <Form.Control id="lastName" type="text" name="lastName" placeholder="Last name" onChange={this.handleChange} required />
+                                </Form.Group>
+                            </Form.Row>
+
+                            <Form.Row>
+                                <Form.Group as={Col}>
+                                    <Form.Label>Email</Form.Label>
+                                    <Form.Control id="email" type="email" name="email" placeholder="Enter email" onChange={this.handleChange} required />
+                                </Form.Group>
+
+                                <Form.Group as={Col}>
+                                    <Form.Label>Contact Number</Form.Label>
+                                    <Form.Control id="number" type="number" name="number" placeholder="Enter number" onChange={this.handleChange} required />
+                                </Form.Group>
+
+
+                            </Form.Row>
+
+                            <Form.Row>
+                                <Form.Group as={Col}>
+                                    <Form.Label>Address</Form.Label>
+                                    <Form.Control id="address" name="address" placeholder="1234 Main St, Apartment" onChange={this.handleChange} required />
+                                </Form.Group>
+
+                            </Form.Row>
+
+                            <Form.Row>
+                                <Form.Group as={Col}>
+                                    <Form.Label>City</Form.Label>
+                                    <Form.Control id="city" name="city" onChange={this.handleChange} required />
+                                </Form.Group>
+
+                                <Form.Group as={Col}>
+                                    <Form.Label>State</Form.Label>
+                                    <Form.Control id="state" name="state" onChange={this.handleChange} required />
+                                </Form.Group>
+
+                                <Form.Group as={Col}>
+                                    <Form.Label>Zip Code</Form.Label>
+                                    <Form.Control id="zipcode" type="number" name="zipcode" onChange={this.handleChange} required />
+                                </Form.Group>
+                            </Form.Row>
+
+                        </Form>
+
                     </div>
                 </div>
                 <div className="middle-block" >

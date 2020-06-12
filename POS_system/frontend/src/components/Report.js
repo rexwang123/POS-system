@@ -74,7 +74,7 @@ function Report(Props) {
                 <thead>
                     <tr>
                         <th>Goods Name</th>
-                        <th>Quantity</th>
+                        <th>Quantity (kg)</th>
                     </tr>
                 </thead>
                 <tbody>

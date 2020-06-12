@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {GET_CUSTOMERS, DELETE_CUSTOMERS, ADD_CUSTOMERS, PUT_CUSTOMERS} from './types';
+import {GET_CUSTOMERS, DELETE_CUSTOMERS, ADD_CUSTOMERS, PUT_CUSTOMERS, GET_ONE_CUSTOMER} from './types';
 
 // GET CUSTOMERS
 export const getCustomers = () => dispatch =>{
@@ -37,10 +37,21 @@ export const addCustomers = customer => dispatch =>{
 
 // PUT CUSTOMERS
 export const putCustomers = customer => dispatch =>{
-    axios.put(`/api/goods/${customer.id}/`,customer)
+    axios.put(`/api/customers/${customer.number}/`,customer)
         .then (res => {
             dispatch({
                 type: PUT_CUSTOMERS,
+                payload: res.data
+            });
+        }).catch(err => console.log(err));
+}
+
+// GET ONE CUSTOMER
+export const getOneCustomer= number => dispatch =>{
+    axios.get(`/api/customers/${number}`)
+        .then (res => {
+            dispatch({
+                type: GET_ONE_CUSTOMER,
                 payload: res.data
             });
         }).catch(err => console.log(err));

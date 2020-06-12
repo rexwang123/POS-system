@@ -48,8 +48,8 @@ export class Goods extends Component {
                         <thead>
                             <tr>
                                 <th>Goods Name</th>
-                                <th>Cost</th>
-                                <th>Selling Price</th>
+                                <th>Cost (per kg)</th>
+                                <th>Selling Price (per kg)</th>
                             </tr>
                         </thead>
                         <tbody>
