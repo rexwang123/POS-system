@@ -29,10 +29,10 @@ class App extends Component {
                                     <Nav.Link href="#/transactions">Order Summary</Nav.Link>
                                     <Nav.Link href="#/goods">Goods</Nav.Link>
                                     <Nav.Link href="#/statements">Statements</Nav.Link>
-                                    {/* <Nav.Link href="#/report/selected_dates">Report</Nav.Link> */}
 
                                     <NavDropdown title="Reports" id="collasible-nav-dropdown">
                                         <NavDropdown.Item href="#/report/selected_dates">Selected Dates</NavDropdown.Item>
+                                        <NavDropdown.Divider />
                                         <NavDropdown.Item href="#/report/all">All</NavDropdown.Item>
                              
                                     </NavDropdown>

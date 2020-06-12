@@ -5,6 +5,8 @@ import axios from 'axios';
 import {getCustomers, deleteCustomers} from '../actions/customers'
 import { Button, ButtonGroup, Form, Col, Row, InputGroup, FormControl } from 'react-bootstrap';
 import Customer_details from './Customer_details'
+import { Nav, NavDropdown } from 'react-bootstrap'
+import Navbar from 'react-bootstrap/Navbar'
 
 export class Customers extends Component{
     static propTypes = {
@@ -64,6 +66,7 @@ export class Customers extends Component{
                 <table className="table table-striped">
                     <thead>
                         <tr>
+                            <th>Orders</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Number</th>
@@ -71,14 +74,24 @@ export class Customers extends Component{
                     </thead>
                     <tbody>
                         {this.props.customers.map(customer => (
+                            
                             <tr key={customer.id}>
+                            <td><NavDropdown title="view orders">
+                            {customer.orders.map(order => {
+                                return <NavDropdown.Item href="#">order id: {order.orderId}</NavDropdown.Item>
+                            })}
+                            
+                            </NavDropdown></td>
                                 <td>{customer.firstName} {customer.lastName}</td>
                                 <td>{customer.email}</td>
+                               
                                 <td>{customer.number}</td>
+                                
                                 <td>
                                     <button className="btn btn-danger btn-sm" onClick = {this.props.deleteCustomers.bind(this, customer.id)}> Delete </button>
                                 </td>
                             </tr>
+                           
                         ))}
                     </tbody>
                 </table>
