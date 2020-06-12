@@ -109,7 +109,7 @@ function Report(Props) {
                 <table className="table table-striped">
                     <thead>
                         <tr>
-                            <th>Customer Number</th>
+                            <th>Customer's Number</th>
                             <th>Sales</th>
                         </tr>
                     </thead>

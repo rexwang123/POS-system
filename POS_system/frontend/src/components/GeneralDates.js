@@ -41,15 +41,9 @@ export class GeneralDates extends Component {
                 var customersMap = new Map()
 
 
-                // var cost_list = []
-                // var price_list = []
-                
                 const total_cost = res.data.reduce((a,c)=>a+parseFloat(c.total_cost),0)
                 const total_price = res.data.reduce((a,c)=>a+parseFloat(c.total_price),0)
 
-                console.log(total_cost)
-                console.log("，，，")
-                console.log(total_price)
                 
                 this.props.goods.map(goods => {
                     goodsMap.set(goods.goods, 0)

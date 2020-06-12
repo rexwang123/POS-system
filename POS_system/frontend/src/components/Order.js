@@ -2,7 +2,7 @@ import React, { Component, useState } from "react";
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css'
 import './App.css';
-import { Button, ButtonGroup, Form, Col, Row, InputGroup, FormControl } from 'react-bootstrap';
+import { Button, ButtonGroup, Form, Col, Row, InputGroup, FormControl, Alert} from 'react-bootstrap';
 import Customer_form from './Customer_form'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
@@ -35,6 +35,8 @@ class Order extends Component {
         total_cost: 0,
         total_price: 0,
         total_revenue: 0,
+
+        condition: ""
     };
 
     static PropTypes = {
@@ -53,7 +55,7 @@ class Order extends Component {
     }
 
     handleSubmit = () => {
-        if (this.state.firstName === "" || this.state.lastName === "" || this.state.email === ""
+        if (this.state.firstName === "" || this.state.lastName === "" 
             || this.state.number === "" || this.state.address === "" || this.state.city === ""
             || this.state.state === "" || this.state.zipcode === "" || this.state.date === "") {
             alert("You missed one or more fields")
@@ -68,7 +70,7 @@ class Order extends Component {
             const customer = { lastName, firstName, email, number };
             // this.props.addCustomers(customer)
 
-            const orderId = this.state.number + "" + Math.floor(100000 + Math.random() * 900000);
+            const orderId = this.state.number + this.state.date + Math.floor(Math.random() * 1000000);
             const order = {
                 delivery_fee, customer: parseInt(number), date, status, address, city, state, zipcode, orderId: orderId,
                 total_quantity,
@@ -96,44 +98,13 @@ class Order extends Component {
                         })
 
                 })
-                // this.setState({
-                //     lastName: "",
-                //     firstName: "",
-                //     email: "",
-                //     number: "",
-                //     address: "",
-                //     city: "",
-                //     state: "",
-                //     zipcode: "",
-                //     items: [],
-    
-                //     date: "",
-                //     item_name: "",
-                //     quantity: "",
-                //     item_cost: "",
-                //     item_price: "",
-                //     delivery_fee: 0,
-                //     status: "Paid",
-                //     orderId: "",
-                //     total_quantity: 0,
-                //     total_cost: 0,
-                //     total_price: 0,
-                //     total_revenue: 0,
-                // })
-    
-                // document.getElementById("lastName").value = ""
-                // document.getElementById("firstName").value = ""
-                // document.getElementById("number").value = ""
-                // document.getElementById("email").value = ""
-                // document.getElementById("address").value = ""
-                // document.getElementById("city").value = ""
-                // document.getElementById("state").value = ""
-                // document.getElementById("zipcode").value = ""
-
-            
+            alert(`You have created a new order! \n
+                    Order ID: ${orderId}`)
+                
         }
     }
 
+    
 
     handleSelect = event => {
         const value = event.target.value;
@@ -214,7 +185,7 @@ class Order extends Component {
                             <Form.Row>
                                 <Form.Group as={Col}>
                                     <Form.Label>Email</Form.Label>
-                                    <Form.Control id="email" type="email" name="email" placeholder="Enter email" onChange={this.handleChange} required />
+                                    <Form.Control id="email" type="email" name="email" placeholder="Enter email (optional)" onChange={this.handleChange} required />
                                 </Form.Group>
 
                                 <Form.Group as={Col}>
@@ -260,7 +231,7 @@ class Order extends Component {
                         <thead>
                             <tr>
                                 <th>Item Name</th>
-                                <th>Quantity (lb)</th>
+                                <th>Quantity (kg)</th>
                                 <th>Cost</th>
                                 <th>Selling Price</th>
                                 <th>Net Profit</th>
@@ -301,9 +272,9 @@ class Order extends Component {
 
                         </InputGroup>
                         <InputGroup className="mb-2 mr-sm-2">
-                            <FormControl type="number" name="quantity" onChange={this.handleChange} id="inlineFormInputGroupUsername2" placeholder="Quantity in lb" required />
+                            <FormControl type="number" name="quantity" onChange={this.handleChange} id="inlineFormInputGroupUsername2" placeholder="Quantity in kg" required />
                             <InputGroup.Append>
-                                <InputGroup.Text>lb</InputGroup.Text>
+                                <InputGroup.Text>kg</InputGroup.Text>
                             </InputGroup.Append>
                         </InputGroup>
 

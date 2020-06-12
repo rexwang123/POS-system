@@ -11,7 +11,7 @@ class Order(models.Model):
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
     zipcode = models.PositiveIntegerField()
-    orderId = models.CharField(max_length=20, primary_key=True)
+    orderId = models.CharField(max_length=100, primary_key=True)
     total_quantity = models.DecimalField(decimal_places=2, max_digits=20)
     total_cost = models.DecimalField(decimal_places=2, max_digits=20)
     total_price = models.DecimalField(decimal_places=2, max_digits=20)
