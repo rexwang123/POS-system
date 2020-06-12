@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'goods',
     'frontend',
     'orders',
+    'sections',
+    'entries',
     'rest_framework'
 ]
 

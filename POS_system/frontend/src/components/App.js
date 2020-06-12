@@ -9,9 +9,11 @@ import Order from './Order'
 import Customer from './Customer'
 import Goods from './Goods'
 import Transactions from './Transactions'
-import Daily from './Daily'
-import { Provider } from 'react-redux';
-import store from '../store';
+import AllDates from './AllDates'
+import GeneralDates from './GeneralDates'
+import { Provider } from 'react-redux'
+import store from '../store'
+import Statements from './Statements'
 
 class App extends Component {
     render() {
@@ -19,27 +21,25 @@ class App extends Component {
             <Provider store={store}>
                 <div>
                         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                            <Navbar.Brand href="#home">Menu</Navbar.Brand>
+                            <Navbar.Brand href="#home">Home</Navbar.Brand>
                             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                             <Navbar.Collapse id="responsive-navbar-nav">
                                 <Nav className="mr-auto">
                                     <Nav.Link href="#/customer">Customers</Nav.Link>
-                                    <Nav.Link href="#/order">Order</Nav.Link>
+                                    
                                     <Nav.Link href="#/goods">Goods</Nav.Link>
                                     <Nav.Link href="#/transactions">Order Summary</Nav.Link>
+                                    <Nav.Link href="#/statements">Statements</Nav.Link>
+                                    {/* <Nav.Link href="#/report/selected_dates">Report</Nav.Link> */}
 
                                     <NavDropdown title="Reports" id="collasible-nav-dropdown">
-                                        <NavDropdown.Item href="#/report/daily">Daily</NavDropdown.Item>
-                                        <NavDropdown.Item href="#/report/weekly">Weekly</NavDropdown.Item>
-                                        <NavDropdown.Item href="#/report/monthly">Monthly</NavDropdown.Item>
+                                        <NavDropdown.Item href="#/report/selected_dates">Selected Dates</NavDropdown.Item>
+                                        <NavDropdown.Item href="#/report/all">All</NavDropdown.Item>
                              
                                     </NavDropdown>
                                 </Nav>
                                 <Nav>
-                                    <Nav.Link href="#deets">More deets</Nav.Link>
-                                    <Nav.Link eventKey={2} href="#memes">
-                                        Dank memes
-                                    </Nav.Link>
+                                <Nav.Link href="#/order">New Order</Nav.Link>
                                 </Nav>
                             </Navbar.Collapse>
                         </Navbar>
@@ -48,7 +48,9 @@ class App extends Component {
                             <Route exact path="/customer" component={Customer} />
                             <Route exact path="/goods" component={Goods} />
                             <Route exact path="/transactions" component={Transactions} />
-                            <Route exact path="/report/daily" component={Daily} />
+                            <Route exact path="/report/all" component={AllDates} />
+                            <Route exact path="/report/selected_dates" component={GeneralDates} />
+                            <Route exact path="/statements" component={Statements} />
                     </Router>
                 </div>
             </Provider>

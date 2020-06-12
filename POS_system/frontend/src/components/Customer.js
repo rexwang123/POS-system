@@ -21,7 +21,6 @@ export class Customers extends Component{
                 <table className="table table-striped">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Number</th>

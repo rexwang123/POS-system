@@ -62,20 +62,20 @@ class Order extends Component {
             const { lastName, firstName, email, number, address, city, state, zipcode, status, date, delivery_fee, total_quantity,
                 total_cost,
                 total_price,
-                total_revenue} = this.state;
+                total_revenue } = this.state;
             // add customer to sqlite database
             const customer = { lastName, firstName, email, number };
             // this.props.addCustomers(customer)
 
             const orderId = this.state.number + "" + Math.floor(100000 + Math.random() * 900000);
             const order = {
-                delivery_fee, customer: parseInt(number), date, status, address, city, state, zipcode, orderId: orderId, 
+                delivery_fee, customer: parseInt(number), date, status, address, city, state, zipcode, orderId: orderId,
                 total_quantity,
                 total_cost,
                 total_price,
                 total_revenue
             };
-        
+
             axios.post('/api/customers/', customer)
                 .then(res => {
                     console.log(order.customer)
@@ -165,12 +165,13 @@ class Order extends Component {
     render() {
         return (
             <div className="container">
-                <div className="card">
-                    <Customer_form handler={this.handleChange} handleSave={this.handleSaveCus} />
+                <div className="block" >
+                    <div className="card">
+                        <Customer_form handler={this.handleChange} handleSave={this.handleSaveCus} />
+                    </div>
                 </div>
-
-                <div>
-                    <h2> Cart </h2>
+                <div className="middle-block" >
+                    <h1> Cart </h1>
                     <table className="table table-striped">
                         <thead>
                             <tr>
@@ -178,7 +179,7 @@ class Order extends Component {
                                 <th>Quantity (lb)</th>
                                 <th>Cost</th>
                                 <th>Selling Price</th>
-                                <th>Revenue</th>
+                                <th>Net Profit</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -252,9 +253,9 @@ class Order extends Component {
                             <Form.Control name="date" onChange={this.handleChange} type="date" required />
                         </Form.Group>
 
-                        <Form.Group id="total_revenue">
+                        <Form.Group id="total_profit">
                             <Form.Label>
-                                <h2>Total revenue: {this.state.total_revenue - this.state.delivery_fee}</h2>
+                                <h2>Total Profit: {this.state.total_revenue - this.state.delivery_fee}</h2>
                             </Form.Label>
 
                         </Form.Group>

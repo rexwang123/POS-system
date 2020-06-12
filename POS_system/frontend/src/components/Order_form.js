@@ -42,7 +42,7 @@ function Order_form(Props) {
                             <th>Quantity (lb)</th>
                             <th>Cost</th>
                             <th>Selling Price</th>
-                            <th>Revenue</th>
+                            <th>Net Profit</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -85,7 +85,7 @@ function Order_form(Props) {
 
                 <Form.Group id="total_revenue">
                     <Form.Label>
-                        <h2>Total revenue: {Props.order.total_revenue - Props.order.delivery_fee}</h2>
+                        <h2>Total Profit: {Props.order.total_revenue - Props.order.delivery_fee}</h2>
                     </Form.Label>
                 </Form.Group>
 

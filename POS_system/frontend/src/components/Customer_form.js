@@ -61,7 +61,7 @@ function Customer_form(Props){
                 </Form.Row>
 
                 <Button variant="primary" value={true} name="save" onClick={Props.handleSave}>
-                        Save
+                        Save Customer Info
                     </Button>
 
             </Form>
