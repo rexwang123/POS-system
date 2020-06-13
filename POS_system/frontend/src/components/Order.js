@@ -11,6 +11,7 @@ import { getGoods, addGoods } from '../actions/goods'
 import { addOrders } from '../actions/orders'
 import { addCarts } from '../actions/carts'
 
+// This function is used to create new orders
 class Order extends Component {
     state = {
         lastName: "",
@@ -54,6 +55,8 @@ class Order extends Component {
         this.setState({ [event.target.name]: event.target.value });
     }
 
+    // Once all required fields are filled out, it will trigger the Http request for
+    // adding/updating customers, and adding orders, carts to the database
     handleSubmit = () => {
         if (this.state.firstName === "" || this.state.lastName === "" 
             || this.state.number === "" || this.state.address === "" || this.state.city === ""

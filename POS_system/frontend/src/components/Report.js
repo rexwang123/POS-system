@@ -6,10 +6,14 @@ import './App.css';
 import { Button, Form, Col, Row, InputGroup, FormControl } from 'react-bootstrap';
 import Axios from 'axios';
 
+// This is the function for generating the reports, including total sales, top producs/customers
+// And the records of products quantity being purchased
 function Report(Props) {
     const [topGoods, setTopGoods] = useState([])
     const [topCustomers, setTopCustomers] = useState([])
     const [k, setK] = useState(0)
+    
+    // It calculates the top K products from the customer map passed from AllDates.js or GeneralDates.js
     function calculateTopGoods(e) {
         var goodsArray = []
         Props.goodsMap.forEach((value, key) => {
@@ -20,6 +24,7 @@ function Report(Props) {
         setTopGoods(goodsArray)
     }
 
+    // It calculates the top K customers from the customer map passed from AllDates.js or GeneralDates.js
     function calculateTopCustomers(e) {
         var customersArray = []
         Props.customersMap.forEach((value, key) => {
@@ -31,9 +36,7 @@ function Report(Props) {
         setTopCustomers(customersArray)
     }
 
-    function changeK(e) {
-        setK(e.target.value)
-    }
+    
     return (
         <div className='App'>
             <h2>Sales Summary</h2>

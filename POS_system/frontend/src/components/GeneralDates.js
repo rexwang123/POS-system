@@ -8,7 +8,7 @@ import Axios from "axios";
 import Report from './Report'
 import Order from "./Order";
 
-
+// This class is used for generating reports for periods of time by selecting start date and end date
 export class GeneralDates extends Component {
     static PropTypes = {
         carts: PropTypes.array.isRequired,
@@ -32,12 +32,17 @@ export class GeneralDates extends Component {
 
     handleChange = e => this.setState({ [e.target.name]: e.target.value })
 
+    // This function is triggered when clicked on the Search button
+    // It makes a GET Http request to retrieve all orders between the selected time period
+    // It then makes two Map, for customers and products, as preparations for finding K top customer/products 
     handleClick() {
         this.setState(state => ({ ...state, condition: false }))
         var goodsMap = new Map()
         var customersMap = new Map()
         Axios.get('/api/orders/by_dates', { params: { start_date: this.state.start_date, end_date: this.state.end_date } })
             .then(res => {
+
+                // Get total cost, sales for this time period
                 const total_cost = res.data.reduce((a,c)=>a+parseFloat(c.total_cost),0)
                 const total_price = res.data.reduce((a,c)=>a+parseFloat(c.total_price),0)
 
@@ -45,6 +50,11 @@ export class GeneralDates extends Component {
                     goodsMap.set(goods.goods, 0)
                 })
 
+                
+                // update customer Map where key is in the form of "number,name", 
+                // and value is accumulated sales over all orders which belong to the customer
+                
+                // update the goods Map where key is the goods's name, value is accumulated quantity
                 res.data.map(order => {
                     const key = order.customer.number+","+order.customer.firstName + " "+order.customer.lastName;
                     if (customersMap.has(key)) {
@@ -59,13 +69,13 @@ export class GeneralDates extends Component {
                     })
                 }
                 )
-                // console.log(customersMap)
                 this.setState(state => ({ ...state, customersMap: customersMap, goodsMap: goodsMap, condition: true, total_price: total_price, total_cost: total_cost }))
             })
 
 
     }
 
+    // It's a conditional rendering function for rendering the report after the user clicks "Generate Report" 
     condition() {
         if (this.state.condition === true) {
             return (
@@ -80,6 +90,8 @@ export class GeneralDates extends Component {
         }
     }
 
+    // It displays two input fields for users to pick start date and end date
+    // It will then generate the report after selecting start date and end date
     render() {
         return (
             <div className="container">

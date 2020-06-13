@@ -6,7 +6,6 @@ import { Button, ButtonGroup, Form, Col, Row, InputGroup, FormControl } from 're
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { getOneOrder, deleteOrders, putOrders } from '../actions/orders'
-import Order_form from './Order_form'
 
 
 class Transactions extends Component {
@@ -53,6 +52,10 @@ class Transactions extends Component {
         this.setState(state=>({...state, condition:false}))
     }
 
+
+    // This is the condition rendering fucntion. Once the order ID is given, and the 
+    // Search button is clicked, it will display an order's detail information, and provides the 
+    // functionality to update the status of the order, and delete the order
     condition() {
         if (this.state.condition === true) {
             return (
@@ -61,6 +64,7 @@ class Transactions extends Component {
                         <Form>
                             <Form className="align">
                                 <h2> Order ID: {this.state.order.orderId} </h2>
+
 
                                 <Form.Group>
                                     <Form.Label>Name: {this.state.order.customer.firstName + " " + this.state.order.customer.lastName}</Form.Label>
@@ -85,6 +89,9 @@ class Transactions extends Component {
                                 </Form.Group>
                             </Form>
 
+
+
+                            {/* The table shows the details of purchased items */}
                             <table className="table table-striped">
                                 <thead>
                                     <tr>
@@ -118,6 +125,9 @@ class Transactions extends Component {
                             </table>
 
 
+                            
+                            {/* The following part shows the delivery fee, status and date
+                            The Status is able to be changed */}
                             <Form.Row>
                                 <Form.Group as={Col} id="delivery_fee">
                                     <Form.Label>Delivery fee: {this.state.order.delivery_fee}</Form.Label>

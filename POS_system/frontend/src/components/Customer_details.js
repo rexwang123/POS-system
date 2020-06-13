@@ -5,10 +5,14 @@ import Navbar from 'react-bootstrap/Navbar'
 import './App.css';
 import { Button, Form, Col, Row } from 'react-bootstrap';
 
+// This is the function for displaying customer information and all orders details they made
+// This function is called in Customer.js
 function Customer_details(Props) {
     return (
         <div className='App'>
             <Form>
+
+            {/* Display the customer's basic information  */}
             <h4>Customer Information</h4>
                 <Form className="align">
                 
@@ -22,6 +26,8 @@ function Customer_details(Props) {
                         <Form.Label>Contact Number: {Props.customer.number}</Form.Label>
                     </Form.Group>
                 </Form>
+
+                {/* Displaying details of each order of the customer */}
                 <h4>Orders Information</h4>
                 {Props.customer.orders.map(order => {
                     return(

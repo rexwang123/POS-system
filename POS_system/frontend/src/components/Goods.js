@@ -5,6 +5,7 @@ import { getGoods, deleteGoods, addGoods, putGoods } from '../actions/goods'
 import { Button, ButtonGroup, Form, Col, Row, InputGroup, FormControl } from 'react-bootstrap';
 
 
+// This class is used for adding/updating/deleting Products information
 export class Goods extends Component {
     state = {
         goods: "",
@@ -27,6 +28,8 @@ export class Goods extends Component {
         this.props.getGoods();
     }
 
+    // This function adds the input goods name and cost/selling_price to the database
+    // And clear the fields after compeletion
     handleAdd = (e) => {
         e.preventDefault();
         const { goods, cost, selling_price } = this.state;
@@ -38,6 +41,7 @@ export class Goods extends Component {
     }
 
     handleChange = (e) => { this.setState({ [e.target.name]: e.target.value }) };
+
 
     render() {
         return (

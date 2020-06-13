@@ -17,6 +17,7 @@ import Statements from './Statements'
 
 class App extends Component {
     render() {
+        // It provides the Nav bars and links to all modules on the top the page
         return (
             <Provider store={store}>
                 <div>

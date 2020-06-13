@@ -31,6 +31,9 @@ export class Customers extends Component {
 
     handleChange = e => this.setState({ [e.target.name]: e.target.value })
 
+    // When clicks the Search button on the top of the page, this function will be triggered
+    // It will get the customer from database and set the condition to be true to render the 
+    // customer's details
     handleClick() {
         this.setState(state => ({...state, order_condition:false, condition: false}))
         axios.get(`/api/customers/${this.state.number}`)
@@ -47,6 +50,8 @@ export class Customers extends Component {
         })
     }
 
+    // This function will render the customer details by calling the function in Customer_details.js
+    // The condition is used for the conditional rendering
     condition(){
         if (this.state.condition == true) {
             return (
@@ -57,6 +62,8 @@ export class Customers extends Component {
         }
     }
 
+    // This function will render the order detail once the user clicks an order 
+    // The condition is used for the conditional rendering
     condition2() {
         if(this.state.order_condition == true){
             return (
@@ -167,6 +174,8 @@ export class Customers extends Component {
                 {this.condition()}
 
                 {this.condition2()}
+
+                {/* This is the listing out all customers in the database */}
                 <div className="middle-block">
                     <h2> All Customers</h2>
                     <table className="table table-striped">

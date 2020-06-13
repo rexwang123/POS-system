@@ -7,6 +7,7 @@ import { getEntries, deleteEntries, addEntries, putEntries } from '../actions/en
 import { Button, ButtonGroup, Form, Col, Row, InputGroup, FormControl } from 'react-bootstrap';
 import './App.css'
 
+// This class is used for adding sections and entries of each created sections 
 export class Statements extends Component {
     state = {
         section: "",
@@ -26,22 +27,22 @@ export class Statements extends Component {
         this.props.getEntries();
     }
 
+    // This function adds new sections with name input from the users
     handleAddSection = (e) => {
         e.preventDefault();
         const { section } = this.state;
         const toAdd = { section: section };
         this.props.addSections(toAdd);
         document.getElementById("section").value = "";
-        document.getElementById("section").value = "";
     }
 
+    // This function adds new entries with content input from the users
     handleAddEntry = id => {
         const { entry } = this.state;
         const toAdd = { entry: entry, section: id };
         this.props.addEntries(toAdd);
         this.props.getSections();
-        document.getElementById("section").value = "";
-        document.getElementById("section").value = "";
+        document.getElementById("entry").value = "";
 
     }
 
@@ -52,6 +53,7 @@ export class Statements extends Component {
             <div className="container">
                 <Fragment>
 
+                    {/* It lists out all sections, with entries inside */}
                     {this.props.sections.map((section, index) => {
                         const entries = this.props.entries.filter(x => x.section == section.id);
                         return (
@@ -59,6 +61,8 @@ export class Statements extends Component {
 
                                 <h2>{section.section}</h2>
 
+                                {/* It lists out all entries in this section, and enable the edit/save/delete for each entry
+                                It traces the value of the entry by making unique id in this document in the format of "#section,#entry" */}
                                 {entries.map((entry, index2) => {
                                     return (
                                         <div>

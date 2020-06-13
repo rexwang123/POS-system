@@ -28,50 +28,25 @@ export class AllDates extends Component {
 
     
     componentDidMount() {
-        console.log("?")
+        //This function makes all required data ready for passing to Report.js to generate a report
+        //It set the condition to be true for rendering the report after all data is ready
         this.props.getGoods()
-        // Axios.get('/api/goods/')
-        // .then(res_goods => Axios.get('/api/orders/')
-        //     .then(res => {
-        //         var goodsMap = new Map()
-        //         var customersMap = new Map()
-
-        //         var total_cost = 0
-        //         var total_price = 0
-
-        //         res_goods.data.map(goods => {
-        //             goodsMap.set(goods.goods, 0)
-        //         })
-        //         res.data.map(order => {
-        //             if (customersMap.has(order.customer.number)) {
-        //                 customersMap.set(order.customer.number, customersMap.get(order.customer.number) + parseFloat(order.total_price))
-        //             }
-        //             else {
-        //                 customersMap.set(order.customer.number, order.total_price)
-        //             }
-        //             order.carts.map(cart => {
-        //                 goodsMap.set(cart.goods, goodsMap.get(cart.goods) + parseFloat(cart.quantity))
-        //             })
-
-        //             total_cost += order.total_cost
-        //             total_price += order.total_price
-        //         }
-        //         )
-
-        //         this.setState(state => ({ ...state, customersMap: customersMap, goodsMap: goodsMap, total_price: total_price, total_cost: total_cost, condition:true }))
-        //     })
-        // )
         var goodsMap = new Map()
         var customersMap = new Map()
         Axios.get('/api/orders/')
             .then(res => {
+                // Get total cost, sales for this time period
                 const total_cost = res.data.reduce((a,c)=>a+parseFloat(c.total_cost),0)
                 const total_price = res.data.reduce((a,c)=>a+parseFloat(c.total_price),0)
 
+
+                // update customer Map where key is in the form of "number,name", 
+                // and value is accumulated sales over all orders which belong to the customer
+                
+                // update the goods Map where key is the goods's name, value is accumulated quantity
                 this.props.goods.map(goods => {
                     goodsMap.set(goods.goods, 0)
                 })
-
                 res.data.map(order => {
                     const key = order.customer.number+","+order.customer.firstName + " "+order.customer.lastName;
                     if (customersMap.has(key)) {
@@ -86,11 +61,12 @@ export class AllDates extends Component {
                     })
                 }
                 )
-                // console.log(customersMap)
                 this.setState(state => ({ ...state, customersMap: customersMap, goodsMap: goodsMap, total_price: total_price, total_cost: total_cost, condition:true }))
             })
     }
 
+
+    // It's a conditional rendering function for rendering the report after the user clicks "Generate Report" 
     condition() {
         if (this.state.condition === true) {
             return (
