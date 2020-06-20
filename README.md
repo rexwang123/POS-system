@@ -1,10 +1,13 @@
 # POS-system
 # install Django 
+```
 pip install django djangorestframework django-rest-knox
-
+```
 # install packages which help usage of react in Django
+```
 npm install -D webpack webpack-cli 
 npm install -D @babel/core babel-loader @babel/preset-env @babel/preset-react babel-plugin-transform-class-properties
+```
 
 # install react and used packages
 npm install react react-dom prop-types
@@ -27,16 +30,18 @@ Run "npm run dev” if you make any changes in frontend/src/components/*, this i
 
 # Clear database
 in the POS_system/POS_system directory
-<br>
+
+```
   rm db.sqlite
-<br>
   python manage.py migrate
+```
 
 # After making modifications of models, make them reflected in the database
 in the POS_system/POS_system directory 
-<br>
+```
   rm customers/migrations/\*_initial.py orders/migrations/\*_initial.py carts/migrations/\*_initial.py goods/migrations/\*_initial.py sections/migrations/\*_initial.py entries/migrations/\*_initial.py
-<br>
+
   python manage.py makemigrations customers orders carts goods sections entries
-<br> 
+
   python manage.py migrate
+```
