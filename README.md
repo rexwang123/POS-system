@@ -33,7 +33,7 @@ rm db.sqlite
 python manage.py migrate
 
 # After making modifications of models, make them reflected in the database
-rm customers/migrations/*_initial.py orders/migrations/*_initial.py carts/migrations/*_initial.py goods/migrations/*_initial.py sections/migrations/*_initial.py entries/migrations/*_initial.py
+rm customers/migrations/\*_initial.py orders/migrations/\*_initial.py carts/migrations/\*_initial.py goods/migrations/\*_initial.py sections/migrations/\*_initial.py entries/migrations/\*_initial.py
 <br>
 python manage.py makemigrations customers orders carts goods sections entries
 <br> 
