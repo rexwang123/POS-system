@@ -74,7 +74,7 @@ class Order extends Component {
             // this.props.addCustomers(customer)
 
             const n = this.state.number.toString()
-            const orderId = n.slice(n.length-4) + this.state.date.split('-').slice(-2).join('') + Math.floor(Math.random() * 1000);
+            const orderId = n.slice(n.length-4) + this.state.date.split('-').slice(-2).join('') + Math.floor(Math.random() * 10000);
             const order = {
                 delivery_fee, customer: parseInt(number), date, status, address, city, state, zipcode, orderId: orderId,
                 total_quantity,

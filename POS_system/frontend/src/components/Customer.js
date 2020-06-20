@@ -5,7 +5,6 @@ import axios from 'axios';
 import { getOrders, deleteOrders, putOrders} from '../actions/orders'
 import { getCustomers, deleteCustomers } from '../actions/customers'
 import { Button, ButtonGroup, Form, Col, Row, InputGroup, FormControl, Card, Modal } from 'react-bootstrap';
-import Customer_details from './Customer_details'
 import { Nav, NavDropdown } from 'react-bootstrap'
 import Navbar from 'react-bootstrap/Navbar'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -123,7 +122,7 @@ export class Customers extends Component {
         this.setState(state => ({ ...state, condition: false }))
     }
 
-    // This function will render the order detail once the user clicks an order 
+    // This function will render the order detail once the user clicks an order, and it enables customers to modify it
     // The condition is used for the conditional rendering
     condition2() {
         if (this.state.order_condition == true) {
@@ -188,7 +187,7 @@ export class Customers extends Component {
                                 </tbody>
                             </table>
 
-
+                                
                             <Form.Row>
                                 <Form.Group as={Col} id="delivery_fee">
                                     <Form.Label>Delivery fee: {this.state.order.delivery_fee}</Form.Label>
@@ -286,6 +285,7 @@ export class Customers extends Component {
 
 
 
+                {/* It calls condition and shows a list of orders of this customer */}
                 <Modal size="lg" onHide={this.handleClose.bind(this)} show={this.state.condition}>
                     <Modal.Header closeButton>
                         <Modal.Title>Customer Name: {this.state.customer.firstName + " " + this.state.customer.lastName}</Modal.Title>
@@ -294,10 +294,10 @@ export class Customers extends Component {
                 </Modal>
 
 
-
+                {/* It calls condition2 and shows the order detail */}
                 <Modal size="lg" onHide={this.handleCloseOrder.bind(this)} show={this.state.order_condition}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Order ID: {this.state.orderId}</Modal.Title>
+                        <Modal.Title>Order ID: {this.state.order.orderId}</Modal.Title>
                     </Modal.Header>
                     {this.condition2()}
                 </Modal>
