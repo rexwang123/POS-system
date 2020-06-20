@@ -41,6 +41,8 @@ python manage.py migrate
 # After making modifications of models, make them reflected in the database
 in the POS_system/POS_system directory 
 ```
+rm db.sqlite 
+
 rm customers/migrations/*_initial.py orders/migrations/*_initial.py carts/migrations/*_initial.py goods/migrations/*_initial.py sections/migrations/*_initial.py entries/migrations/*_initial.py
 
 python manage.py makemigrations customers orders carts goods sections entries
