@@ -16,3 +16,6 @@ class Order(models.Model):
     total_cost = models.DecimalField(decimal_places=2, max_digits=20)
     total_price = models.DecimalField(decimal_places=2, max_digits=20)
     total_revenue = models.DecimalField(decimal_places=2, max_digits=20)
+
+    class Meta:
+        ordering = ('-created_at',)

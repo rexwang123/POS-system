@@ -2,10 +2,10 @@ import React, { Component, useState } from "react";
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css'
 import './App.css';
-import { Button, ButtonGroup, Form, Col, Row, InputGroup, FormControl } from 'react-bootstrap';
+import { Button, ButtonGroup, Form, Col, Row, InputGroup, FormControl, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
-import { getOneOrder, deleteOrders, putOrders } from '../actions/orders'
+import { getOneOrder, deleteOrders, putOrders, getRecentOrders } from '../actions/orders'
 
 
 class Transactions extends Component {
@@ -19,18 +19,24 @@ class Transactions extends Component {
     static PropTypes = {
         order: PropTypes.object.isRequired,
         getOneOrder: PropTypes.func.isRequired,
+        getRecentOrders: PropTypes.func.isRequired,
         deleteOrders: PropTypes.func.isRequired,
         putOrders: PropTypes.func.isRequired
     }
 
-    // componentDidMount(){
-    //     this.props.getOneOrder(this.state.orderId);
+    componentDidMount() {
+        this.props.getRecentOrders();
+    }
+
+    // componentWillUpdate(){
+    //     this.props.getRecentOrders();
     // }
 
     handleChange = e => { this.setState({ [e.target.name]: e.target.value }) }
 
     handleClick = () => {
-        if(this.state.orderId === ""){
+        console.log("yesyakjhfkahsdf")
+        if (this.state.orderId === "") {
             return
         }
         axios.get(`/api/orders/${this.state.orderId}`)
@@ -47,9 +53,29 @@ class Transactions extends Component {
 
     }
 
-    handleDelete = () =>{
+    handleClickView = id => {
+        axios.get(`/api/orders/${id}`)
+            .then(res =>
+                this.setState(state => {
+                    return {
+                        ...state,
+                        condition: true,
+                        order: res.data,
+                        orderId: id,
+                    }
+                })
+            ).catch(err =>
+                alert("The order ID is not found"))
+
+    }
+
+    handleClose = () => {
+        this.setState(state => ({...state,condition:false}))
+    }
+
+    handleDelete = () => {
         this.props.deleteOrders(this.state.orderId)
-        this.setState(state=>({...state, condition:false}))
+        this.setState(state => ({ ...state, condition: false }))
     }
 
 
@@ -63,7 +89,6 @@ class Transactions extends Component {
                     <div className='App'>
                         <Form>
                             <Form className="align">
-                                <h2> Order ID: {this.state.order.orderId} </h2>
 
 
                                 <Form.Group>
@@ -125,14 +150,13 @@ class Transactions extends Component {
                             </table>
 
 
-                            
+
                             {/* The following part shows the delivery fee, status and date
                             The Status is able to be changed */}
                             <Form.Row>
                                 <Form.Group as={Col} id="delivery_fee">
                                     <Form.Label>Delivery fee: {this.state.order.delivery_fee}</Form.Label>
                                 </Form.Group>
-
 
                                 <Form.Group as={Col} className="mb-2 mr-sm-2">
                                     <Form.Label>Status: {this.state.order.status}
@@ -142,24 +166,25 @@ class Transactions extends Component {
                                                 <option value="Not Paid">Not Paid</option>
                                                 <option value="To Be Delivered">To Be Delivered</option>
                                             </Form.Control>
-                                            <Button variant="success" onClick={() =>{
+                                            <Button variant="success" onClick={() => {
                                                 const new_order = {
-                                                    delivery_fee:this.state.order.delivery_fee, 
-                                                    customer: this.state.order.customer.number, 
-                                                    date:this.state.order.date, 
-                                                    status:this.state.status, 
-                                                    address:this.state.order.address, 
-                                                    city:this.state.order.city, 
-                                                    state:this.state.order.state,
-                                                    zipcode:this.state.order.zipcode, 
+                                                    delivery_fee: this.state.order.delivery_fee,
+                                                    customer: this.state.order.customer.number,
+                                                    date: this.state.order.date,
+                                                    status: this.state.status,
+                                                    address: this.state.order.address,
+                                                    city: this.state.order.city,
+                                                    state: this.state.order.state,
+                                                    zipcode: this.state.order.zipcode,
                                                     orderId: this.state.order.orderId,
                                                     total_quantity: this.state.order.total_quantity,
-                                                    total_cost:this.state.order.total_cost,
-                                                    total_price:this.state.order.total_price,
-                                                    total_revenue:this.state.order.total_revenue
+                                                    total_cost: this.state.order.total_cost,
+                                                    total_price: this.state.order.total_price,
+                                                    total_revenue: this.state.order.total_revenue
+                                                }
+                                                this.setState(state => ({ ...state, order: { ...state.order, status: this.state.status } }))
+                                                this.props.putOrders(new_order)
                                             }
-                                                this.setState(state=>({...state, order:{...state.order, status:this.state.status}}))
-                                                this.props.putOrders(new_order)}
 
                                             }>Save</Button>
                                         </Form>
@@ -181,11 +206,10 @@ class Transactions extends Component {
                         </Form>
                     </div>
                     <Button variant="danger" onClick={this.handleDelete}>
-                    Delete
+                        Delete
                     </Button>
                 </div>)
         }
-
     }
 
     render() {
@@ -203,17 +227,57 @@ class Transactions extends Component {
                     </InputGroup.Append>
                 </InputGroup>
 
-                <div className="card">
+                {/* <div className="card">
                     {this.condition()}
-                </div>
+                </div> */}
+
+                <Modal size="lg" onHide={this.handleClose} show={this.state.condition}>
+                <Modal.Header closeButton>
+                <Modal.Title>Order ID: {this.state.orderId}</Modal.Title>
+                </Modal.Header>
+                    {this.condition()}
+                </Modal>
+
                 
+
+                <table className="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Order ID</th>
+                            <th>Status</th>
+                            <th>Sales</th>
+                            <th>Date</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.props.recent_orders.map((order, index) => {
+                            return (
+                                <tr key={index}>
+                                    <td>{order.customer.firstName + " " + order.customer.lastName}</td>
+                                    <td>{order.orderId}</td>
+                                    <td>{order.status}</td>
+                                    <td>{order.total_price}</td>
+                                    <td>{order.date}</td>
+                                    <td>
+                                        <Button variant="primary" onClick={()=>{this.handleClickView(order.orderId)}}>view details</Button>
+                                    </td>
+                                </tr>)
+                        })}
+                    </tbody>
+                </table>
+
+                
+
             </div>
         )
     }
 }
 
 const mapStateToProps = state => ({
-    order: state.orders.order
+    order: state.orders.order,
+    recent_orders: state.orders.recent_orders
 })
 
-export default connect(mapStateToProps, { getOneOrder, putOrders, deleteOrders })(Transactions)
+export default connect(mapStateToProps, { getOneOrder, putOrders, deleteOrders, getRecentOrders })(Transactions)

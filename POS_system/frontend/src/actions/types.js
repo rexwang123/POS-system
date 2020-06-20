@@ -20,6 +20,8 @@ export const DELETE_ORDERS = "DELETE_ORDERS";
 export const ADD_ORDERS = "ADD_ORDERS";
 export const PUT_ORDERS = "PUT_ORDERS";
 export const GET_ONE_ORDER = "GET_ONE_ORDER";
+export const GET_RECENT_ORDERS = "GET_RECENT_ORDERS";
+
 
 export const GET_SECTIONS = "GET_SECTIONS";
 export const DELETE_SECTIONS = "DELETE_SECTIONS";

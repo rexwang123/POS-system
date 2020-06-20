@@ -5,6 +5,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import { Link } from 'react-router'
 import './App.css';
 import { HashRouter as Router, Route, NavLink, Switch, Redirect } from 'react-router-dom';
+import Home from './Home'
 import Order from './Order'
 import Customer from './Customer'
 import Goods from './Goods'
@@ -14,15 +15,19 @@ import GeneralDates from './GeneralDates'
 import { Provider } from 'react-redux'
 import store from '../store'
 import Statements from './Statements'
+import pic from '../assets/images/pos_bg.jpg'
+
 
 class App extends Component {
+   
+
     render() {
         // It provides the Nav bars and links to all modules on the top the page
         return (
-            <Provider store={store}>
                 <div>
-                        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                            <Navbar.Brand href="#home">Home</Navbar.Brand>
+                <h1>????????????</h1>
+                        {/* <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+                            <Navbar.Brand href="#/home">Home</Navbar.Brand>
                             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                             <Navbar.Collapse id="responsive-navbar-nav">
                                 <Nav className="mr-auto">
@@ -44,6 +49,7 @@ class App extends Component {
                             </Navbar.Collapse>
                         </Navbar>
                         <Router>
+                            <Route exact path="/home" component={Home} />
                             <Route exact path="/order" component={Order} />
                             <Route exact path="/customer" component={Customer} />
                             <Route exact path="/goods" component={Goods} />
@@ -51,9 +57,9 @@ class App extends Component {
                             <Route exact path="/report/all" component={AllDates} />
                             <Route exact path="/report/selected_dates" component={GeneralDates} />
                             <Route exact path="/statements" component={Statements} />
-                    </Router>
+                    </Router> */}
+                    <img src={pic}/>
                 </div>
-            </Provider>
         );
     }
 }

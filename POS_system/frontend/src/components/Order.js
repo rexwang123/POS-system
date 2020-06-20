@@ -73,7 +73,8 @@ class Order extends Component {
             const customer = { lastName, firstName, email, number };
             // this.props.addCustomers(customer)
 
-            const orderId = this.state.number + this.state.date + Math.floor(Math.random() * 1000000);
+            const n = this.state.number.toString()
+            const orderId = n.slice(n.length-4) + this.state.date.split('-').slice(-2).join('') + Math.floor(Math.random() * 1000);
             const order = {
                 delivery_fee, customer: parseInt(number), date, status, address, city, state, zipcode, orderId: orderId,
                 total_quantity,
@@ -272,7 +273,6 @@ class Order extends Component {
                             {this.props.goods.map(goods => (
                                     <option value={goods.goods}>{goods.goods}</option>))}
                             </Form.Control>
-
                         </InputGroup>
                         <InputGroup className="mb-2 mr-sm-2">
                             <FormControl type="number" name="quantity" onChange={this.handleChange} id="inlineFormInputGroupUsername2" placeholder="Quantity in kg" required />

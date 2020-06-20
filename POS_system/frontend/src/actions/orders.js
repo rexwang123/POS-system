@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {GET_ORDERS, DELETE_ORDERS, ADD_ORDERS, PUT_ORDERS, GET_ONE_ORDER} from './types';
+import {GET_ORDERS, DELETE_ORDERS, ADD_ORDERS, PUT_ORDERS, GET_ONE_ORDER, GET_RECENT_ORDERS} from './types';
 
 // GET ORDERS
 export const getOrders = () => dispatch =>{
@@ -52,6 +52,17 @@ export const getOneOrder= orderId => dispatch =>{
         .then (res => {
             dispatch({
                 type: GET_ONE_ORDER,
+                payload: res.data
+            });
+        }).catch(err => console.log(err));
+}
+
+// GET RECENT ORDERS
+export const getRecentOrders= () => dispatch =>{
+    axios.get(`/api/orders/recent`)
+        .then (res => {
+            dispatch({
+                type: GET_RECENT_ORDERS,
                 payload: res.data
             });
         }).catch(err => console.log(err));

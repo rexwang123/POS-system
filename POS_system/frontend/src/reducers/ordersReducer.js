@@ -1,7 +1,8 @@
-import { GET_ORDERS, DELETE_ORDERS, ADD_ORDERS, PUT_ORDERS, GET_ONE_ORDER} from '../actions/types.js';
+import { GET_ORDERS, DELETE_ORDERS, ADD_ORDERS, PUT_ORDERS, GET_ONE_ORDER, GET_RECENT_ORDERS} from '../actions/types.js';
 
 const initialState = {
     orders: [],
+    recent_orders:[],
     order: "initial"
 }
 
@@ -15,7 +16,8 @@ export default function(state = initialState, action) {
         case DELETE_ORDERS:
             return{
                 ...state,
-                orders: state.orders.filter(order => order.orderId != action.payload)
+                orders: state.orders.filter(order => order.orderId != action.payload),
+                recent_orders: state.recent_orders.filter(order => order.orderId != action.payload)
             };
 
         case ADD_ORDERS:
@@ -27,15 +29,28 @@ export default function(state = initialState, action) {
         case PUT_ORDERS:
             return{
                 ...state,
-                orders: [...state.orders]
+                recent_orders: state.recent_orders.map(order => {
+                    if(order.orderId == action.payload.orderId){
+                        return {...action.payload, customer:order.customer}
+                    }
+                    else{
+                        return order
+                    } 
+                })
             };
             
         case GET_ONE_ORDER:
-            console.log(action.payload)
             return{
                 ...state,
                 order: action.payload
             };
+
+        case GET_RECENT_ORDERS:
+            return{
+                ...state,
+                recent_orders:action.payload
+            };
+
         default:
             return state
     }

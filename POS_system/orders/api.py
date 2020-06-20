@@ -5,7 +5,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 class OrderViewSet(viewsets.ModelViewSet):
-    queryset = Order.objects.all()
+    queryset = Order.objects.all().order_by('-created_at')
     permission_classes = [
         permissions.AllowAny
     ]
@@ -20,5 +20,12 @@ class OrderViewSet(viewsets.ModelViewSet):
         start_date = request.GET.get('start_date')
         end_date = request.GET.get('end_date')
         orders_ = Order.objects.filter(date__gte=start_date,date__lte=end_date)
+        serializer = self.get_serializer(orders_,many=True)
+        return Response(serializer.data)
+
+    
+    @action(detail=False)
+    def recent(self, request):
+        orders_ = Order.objects.all().order_by('-created_at')[:20]
         serializer = self.get_serializer(orders_,many=True)
         return Response(serializer.data)
