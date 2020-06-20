@@ -14,11 +14,9 @@ npm install axios bootstrap css-loader style-loader url-loader file-loader react
 # Launch this app
 cd POS_system 
 <br>
-python manage.py migrate
-<br>
 python manage.py runserver 
 <br>
-Open a new browser, and go http://127.0.0.1:8000/ 
+Open a new browser, and go to http://127.0.0.1:8000/ 
 
 
 
@@ -33,6 +31,8 @@ rm db.sqlite
 python manage.py migrate
 
 # After making modifications of models, make them reflected in the database
+in the POS_system/POS_system directory 
+<br>
 rm customers/migrations/\*_initial.py orders/migrations/\*_initial.py carts/migrations/\*_initial.py goods/migrations/\*_initial.py sections/migrations/\*_initial.py entries/migrations/\*_initial.py
 <br>
 python manage.py makemigrations customers orders carts goods sections entries
