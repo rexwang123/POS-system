@@ -13,9 +13,8 @@ npm install axios bootstrap css-loader style-loader url-loader file-loader react
 
 # Launch this app
 
-  cd POS_system 
-<br>
-  python manage.py runserver 
+>  cd POS_system 
+>  python manage.py runserver 
 <br>
 Open a new browser, and go to http://127.0.0.1:8000/ 
 
