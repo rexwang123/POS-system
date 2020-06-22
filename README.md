@@ -38,7 +38,8 @@ rm db.sqlite
 python manage.py migrate
 ```
 
-# After making modifications of models in django rest franework, run the following commands to make the changes reflected in the database
+# After making modifications of models in django rest franework
+## run the following commands to make the changes reflected in the database
 in the POS_system/POS_system directory 
 ```
 rm db.sqlite 
