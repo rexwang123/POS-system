@@ -34,7 +34,7 @@ Run "npm run dev” if you make any changes in frontend/src/components/*, this i
 in the POS_system/POS_system directory
 
 ```
-rm db.sqlite
+rm db.sqlite3
 python manage.py migrate
 ```
 
@@ -42,7 +42,7 @@ python manage.py migrate
 ## run the following commands to make the changes reflected in the database
 in the POS_system/POS_system directory 
 ```
-rm db.sqlite 
+rm db.sqlite3 
 
 rm customers/migrations/*_initial.py orders/migrations/*_initial.py carts/migrations/*_initial.py goods/migrations/*_initial.py sections/migrations/*_initial.py entries/migrations/*_initial.py
 
