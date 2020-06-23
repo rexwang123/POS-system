@@ -31,7 +31,7 @@ Open a new browser, and go to http://127.0.0.1:8000/
 Run "npm run dev” if you make any changes in frontend/src/components/*, this is used to compile the JS codes for React part, otherwise it will not be compiled and the changes will not be applied
 
 # If you want to completely clear the database
-in the POS_system/POS_system directory
+in the POS-system/POS_system directory
 
 ```
 rm db.sqlite3
@@ -40,7 +40,7 @@ python manage.py migrate
 
 # After making modifications of models in django rest franework
 ## run the following commands to make the changes reflected in the database
-in the POS_system/POS_system directory 
+in the POS-system/POS_system directory 
 ```
 rm db.sqlite3 
 
